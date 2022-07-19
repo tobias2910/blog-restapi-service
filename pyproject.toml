@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "blog-restapi-service"
+version = "0.1.0"
+description = ""
+authors = ["tobias2910 <33369379+tobias2910@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.79.0"
+uvicorn = "^0.18.2"
+SQLAlchemy = "^1.4.39"
+alembic = "^1.8.1"
+psycopg2-binary = "^2.9.3"
+pydantic = {extras = ["email"], version = "^1.9.1"}
+python-dotenv = "^0.20.0"
+asyncpg = "^0.26.0"
+
+[tool.poetry.dev-dependencies]
+autopep8 = "^1.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
