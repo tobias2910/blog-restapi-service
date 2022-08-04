@@ -1,15 +1,17 @@
+
 # type: ignore
-from typing import List
 from sqlalchemy.ext.asyncio import AsyncResult
 
-from sqlalchemy import update
 from sqlalchemy.future import select
 from sqlalchemy.orm import Session
 
 from models.user_model import User
 
 
-class UserService():
+class User_service():
+    '''
+    Provides all user related services
+    '''
 
     def __init__(self, db_session: Session):
         self.db_session = db_session
@@ -18,6 +20,6 @@ class UserService():
         self.db_session.add(User(email=mail, hash_password=password))
         result = await self.db_session.flush()
 
-    async def get_user(self, mail: str) -> List[User]:
+    async def get_user(self, mail: str) -> User:
         res: AsyncResult = await self.db_session.execute(select(User).filter(User.email == mail))
-        return res.all()
+        return res.first()

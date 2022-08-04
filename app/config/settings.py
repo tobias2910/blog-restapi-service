@@ -32,6 +32,13 @@ class Settings (BaseSettings):
             path=f"/{values.get('POSTGRES_DB') or ''}",
         )
 
+    # JWT Settings
+    JWT_SECRET_KEY: str
+    JWT_REFRESH_SECRET_KEY: str
+    ALGORITHM: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
+    REFRESH_TOKEN_EXPIRE_MINUTES: int
+
     # API Admin user configuration
     ADMIN_USER: EmailStr
     ADMIN_PW: str
