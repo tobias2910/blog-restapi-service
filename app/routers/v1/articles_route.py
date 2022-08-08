@@ -1,8 +1,6 @@
-from typing import List
-
 from fastapi import APIRouter, status
 
-from ... import schemas
+from app.schemas import articles_schema
 
 TAG_INFORMATION = {
     'name': 'articles',
@@ -16,12 +14,12 @@ router = APIRouter(
 
 @router.put(
     '/',
-    response_model=List[schemas.ArticleCreated],
+    response_model=articles_schema.ArticleCreated,
     summary='Create a new article',
     description='Creates a new article with the information provided',
     status_code=status.HTTP_201_CREATED,
 )
-async def add_article(article: List[schemas.Article]):
+async def add_article(article: articles_schema.Article):
     return {'successful': True}
 
 

@@ -1,5 +1,5 @@
-from config.settings import settings
-from db.base import Base
+from app.config.settings import settings
+from app.db.base import Base
 from models import article, skill, skillCategories, skillLevels, project, user  # type: ignore
 
 from logging.config import fileConfig

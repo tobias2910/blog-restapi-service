@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.dialects.postgresql import DATE
 
-from db.base import Base
+from app.db.base import Base
 
 
 class Article(Base):

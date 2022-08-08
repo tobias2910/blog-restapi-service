@@ -1,25 +1,33 @@
 
 # type: ignore
+from typing import Union
+
 from sqlalchemy.ext.asyncio import AsyncResult
 
 from sqlalchemy.future import select
 from sqlalchemy.orm import Session
 
-from models.user_model import User
+from app.models.user_model import User
 
 
 class User_service():
     '''
     Provides all user related services
     '''
-
-    def __init__(self, db_session: Session):
-        self.db_session = db_session
-
-    async def create_new_user(self, mail: str, password: str):
+    async def create_new_user(self, db_session: Session, mail: str, password: str):
+        '''
+        Creates a new user in the database
+        '''
         self.db_session.add(User(email=mail, hash_password=password))
-        result = await self.db_session.flush()
+        res = await db_session.flush()
+        return res
 
-    async def get_user(self, mail: str) -> User:
-        res: AsyncResult = await self.db_session.execute(select(User).filter(User.email == mail))
-        return res.first()
+    async def get_user(self, db_session: Session, mail: str) -> Union[User, None]:
+        '''
+        Returns the matched user based on the provided ID
+        '''
+        res: AsyncResult = await db_session.execute(select(User).where(User.email == mail))
+        return res.scalars().first()
+
+
+user_service = User_service()

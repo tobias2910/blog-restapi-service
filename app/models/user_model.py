@@ -1,6 +1,8 @@
-from sqlalchemy import Column, Integer, String, func
+import bcrypt  # type: ignore
+import hmac
+from sqlalchemy import Column, Integer, String
 
-from db.base import Base
+from app.db.base import Base
 
 
 class User(Base):
@@ -16,8 +18,17 @@ class User(Base):
 
     @hash_password.setter
     def hash_password(self, hash_password: str):
-        self.password = func.crypt(hash_password, func.gen_salt('md5'))
+        '''
+        Hash the provided password and store in the password field
+        '''
+        self.password = bcrypt.hashpw(hash_password, bcrypt.gensalt())
 
-    def verify_password(self, hash_password: str):
-        pw_hash = func.crypt(self.password, hash_password)
-        return self.password == pw_hash
+    def verify_password(self, password: str) -> bool:
+        '''
+        Check, whether the passed password equals the one that is stored
+        for the current user.
+        '''
+        self_encoded_password: str = self.password.encode('utf-8')
+        self_password_hash: str = bcrypt.hashpw(
+            password.encode('utf-8'), self_encoded_password)
+        return hmac.compare_digest(self_encoded_password, self_password_hash)

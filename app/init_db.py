@@ -1,12 +1,12 @@
 import asyncio
 from db.base import async_session
 from sqlalchemy.orm import Session
-from services.user_service import User_service
-from config.settings import settings
+from app.services.user_service import User_service
+from app.config.settings import settings
 
 
 async def main():
-    async with async_session() as session:
+    async with async_session() as session:  # type: ignore
         session: Session
         async with session.begin:  # type: ignore
             user_service = User_service(session)

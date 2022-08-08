@@ -1,2 +1,0 @@
-# noqa
-from .articles import *
