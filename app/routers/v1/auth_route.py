@@ -2,7 +2,7 @@ from fastapi import APIRouter, status
 
 from app.services.auth_service import auth_service
 from app.schemas.auth_schema import Auth_schema
-from app.schemas.token_schema import Token
+# from app.schemas.token_schema import Auth_Token
 
 TAG_INFORMATION = {
     'name': 'auth',
@@ -19,9 +19,8 @@ router = APIRouter(
     summary='Conduct the authentication',
     description='Provide your email and password to receive a token that can be used for all secured endpoints.',
     status_code=status.HTTP_200_OK,
-    response_model=Token
+    # response_model=Auth_Token
 )
 async def authentication(auth_data: Auth_schema):
     auth_tokens = await auth_service.authenticate_user(auth_data.email, auth_data.password)
-
     return auth_tokens

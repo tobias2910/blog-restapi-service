@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from jose import jwt
 
 from app.config.settings import settings
-from app.schemas.token_schema import Token_Types, Token, Auth_Token
+from app.schemas.token_schema import Token_Types, Token, Auth_Token, Token_Payload
 
 
 class Token_service():
@@ -39,21 +39,25 @@ class Token_service():
         refresh_token = self.__generate_token(user_id, int(refresh_token_expire.timestamp()),
                                               Token_Types.REFRESH_TOKEN, settings.JWT_REFRESH_SECRET_KEY)
 
-        return {
+        return Auth_Token(__root__={
             Token_Types.ACCESS_TOKEN: Token(
                 token=access_token,
-                expires=str(access_token_expire),
+                expires=access_token_expire
             ),
-            Token_Types.REFRESH_TOKEN: Token(
+            Token_Types.REFRESH_TOKEN.value: Token(
                 token=refresh_token,
-                expires=str(refresh_token_expire)
-            )
-        }
+                expires=refresh_token_expire
+            )}
+        )
 
-    def verify_token(self, token: str) -> bool:
+    def decode_token(self, token: str) -> Token_Payload:
         '''
-        Verifies whether the provided token is valid
+        Decodes the provided token and returns it 
         '''
+        token_payload = jwt.decode(
+            token, settings.JWT_SECRET_KEY, settings.ALGORITHM)
+
+        return Token_Payload(**token_payload)
 
 
 token_service = Token_service()

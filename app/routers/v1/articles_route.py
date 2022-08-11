@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.put(
+@router.post(
     '/',
     response_model=articles_schema.ArticleCreated,
     summary='Create a new article',

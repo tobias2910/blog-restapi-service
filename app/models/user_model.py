@@ -1,4 +1,4 @@
-import bcrypt  # type: ignore
+import bcrypt
 import hmac
 from sqlalchemy import Column, Integer, String
 
