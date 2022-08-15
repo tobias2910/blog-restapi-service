@@ -15,7 +15,7 @@ class Token (BaseModel):
 
 
 class Auth_Token (BaseModel):
-    __root__: Dict[str, Token]
+    __root__: Dict[Token_Types, Token]
 
     class Config:
         use_enum_values = True
