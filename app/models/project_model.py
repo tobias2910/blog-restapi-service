@@ -4,7 +4,7 @@ from app.db.base import Base
 
 
 class Project(Base):
-    __tablename__ = 'projects'
+    __tablename__ = "projects"
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)

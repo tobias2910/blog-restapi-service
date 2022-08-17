@@ -2,12 +2,12 @@ from typing import List, Union
 from datetime import datetime
 from fastapi import HTTPException, status
 
-from sqlalchemy import delete
+from sqlalchemy import delete, update
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncResult, AsyncSession
 
 from app.models.article_model import Article
-from app.schemas.articles_schema import Article as Article_schema
+from app.schemas.articles_schema import Article as Article_schema, ArticleCreated
 
 
 class Articles_service:
@@ -28,7 +28,7 @@ class Articles_service:
             article: Article_schema = res.scalars().first()
 
             if article is not None:
-                return Article_schema(article)
+                return article
         except:
             raise HTTPException(
                 status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -72,17 +72,14 @@ class Articles_service:
 
     async def create_article(
         self, article: Article_schema, db_session: AsyncSession
-    ) -> Article_schema:
+    ) -> ArticleCreated:
         """
         Inserts the provided article in the database.
         """
+        create_article = article.dict(exclude={"tags"})
         try:
             new_article = Article(
-                title=article.title,
-                author=article.author,
-                image_url=article.imageUrl,
-                description=article.summary,
-                content=article.content,
+                **create_article,
                 tags=";".join(article.tags),
                 created_at=datetime.now(),
             )
@@ -95,6 +92,35 @@ class Articles_service:
             raise HTTPException(
                 status.HTTP_500_INTERNAL_SERVER_ERROR,
                 "Error creating the article",
+            )
+
+    async def update_article(
+        self, article_id: int, article: Article_schema, db_session: AsyncSession
+    ):
+        """
+        Updates the specified article in the database.
+        """
+        try:
+            update_article = article.dict(exclude_unset=True)
+            update_article["tags"] = ";".join(article.tags)
+            res: AsyncSession = await db_session.execute(
+                update(Article)
+                .where(Article.id == article_id)
+                .values(
+                    **update_article,
+                    updated_at=datetime.now(),
+                )
+            )
+
+            if res.rowcount != 0:
+                await db_session.commit()
+                return {"articleID": article_id, "status": "Article updated"}
+            return {"articleID": article_id, "status": "Article not found"}
+
+        except:
+            raise HTTPException(
+                status.HTTP_500_INTERNAL_SERVER_ERROR,
+                "Error updating the article",
             )
 
 

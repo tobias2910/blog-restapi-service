@@ -8,15 +8,16 @@ from app.services.token_service import token_service
 from app.schemas.token_schema import Auth_Token
 
 
-class Auth_service():
-    '''
+class Auth_service:
+    """
     Provides services for the authentication against the API
-    '''
+    """
+
     async def authenticate_user(self, mail: str, password: str) -> Auth_Token:
-        '''
+        """
         Conducts the authentication and provide the access tokens, in case the mail
         and password is correct.
-        '''
+        """
         async with async_session() as session:
             session: Session
             async with session.begin():
@@ -24,11 +25,10 @@ class Auth_service():
                 if user is None or not user.verify_password(password):
                     raise HTTPException(
                         status_code=status.HTTP_400_BAD_REQUEST,
-                        detail='Invalid email and / or password',
+                        detail="Invalid email and / or password",
                     )
 
-                access_tokens = token_service.generate_auth_tokens(
-                    str(user.email))
+                access_tokens = token_service.generate_auth_tokens(str(user.email))
 
                 return access_tokens
 

@@ -7,6 +7,7 @@ class Article(BaseModel):
     """
     Base model for an article
     """
+
     author: str
     tags: List[str]
     imageUrl: str
@@ -17,8 +18,9 @@ class Article(BaseModel):
 
 class ArticleCreated(Article):
     """
-    Response for an created article 
+    Response for an created article
     """
+
     created: str
 
 
@@ -26,4 +28,5 @@ class ArticleUpdated(ArticleCreated):
     """
     Response for an updated article
     """
+
     updated: str

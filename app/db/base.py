@@ -5,9 +5,7 @@ from sqlalchemy.orm import sessionmaker
 
 from app.config.settings import settings
 
-engine = create_async_engine(
-    settings.SQLALCHEMY_DATABASE_URI  # type: ignore
-)
+engine = create_async_engine(settings.SQLALCHEMY_DATABASE_URI)
 
 async_session = sessionmaker(
     engine,
@@ -19,10 +17,10 @@ async_session = sessionmaker(
 
 
 async def get_session() -> AsyncSession:
-    '''
+    """
     Provides the session object, allowing to execute
     CRUD operations on the database.
-    '''
+    """
     async with async_session() as session:
         session: AsyncSession
         yield session

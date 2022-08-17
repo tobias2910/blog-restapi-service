@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
@@ -11,12 +10,12 @@ app = FastAPI(
     title=settings.API_NAME,
     description=settings.API_DESC,
     contact={
-        'name': settings.API_CONTACT_NAME,
-        'url': settings.API_CONTACT_SITE,
-        'email': settings.API_CONTACT_MAIL,
+        "name": settings.API_CONTACT_NAME,
+        "url": settings.API_CONTACT_SITE,
+        "email": settings.API_CONTACT_MAIL,
     },
     openapi_url=f"{settings.API_PATH}/openapi.json",
-    openapi_tags=api_open_tag_information
+    openapi_tags=api_open_tag_information,
 )
 
 # Add the middlewares to the chain
@@ -28,11 +27,11 @@ app.add_middleware(GZipMiddleware)
 app.include_router(api_router, prefix=settings.API_PATH)
 
 
-@app.on_event('startup')  # type: ignore
+@app.on_event("startup")  # type: ignore
 async def establish_connection():
     pass
 
 
-@app.on_event('shutdown')  # type: ignore
+@app.on_event("shutdown")  # type: ignore
 async def close_connection():
     pass

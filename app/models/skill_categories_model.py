@@ -4,7 +4,7 @@ from app.db.base import Base
 
 
 class Category(Base):
-    __tablename__ = 'categories'
+    __tablename__ = "categories"
 
     id = Column(Integer, primary_key=True, index=True)
     category = Column(String, index=True)
