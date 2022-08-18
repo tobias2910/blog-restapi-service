@@ -7,7 +7,7 @@ from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncResult, AsyncSession
 
 from app.models.article_model import Article
-from app.schemas.articles_schema import Article as Article_schema, ArticleCreated
+from app.schemas.articles_schema import ArticleCreated, CreateArticle
 
 
 class Articles_service:
@@ -17,7 +17,7 @@ class Articles_service:
 
     async def get_article(
         self, article_id: int, db_session: AsyncSession
-    ) -> Union[Article_schema, None]:
+    ) -> Union[Article, None]:
         """
         Gets the specified article from the database.
         """
@@ -25,7 +25,7 @@ class Articles_service:
             res: AsyncResult = await db_session.execute(
                 select(Article).filter(Article.id == article_id)
             )
-            article: Article_schema = res.scalars().first()
+            article: Article = res.scalars().first()
 
             if article is not None:
                 return article
@@ -36,16 +36,16 @@ class Articles_service:
             )
 
     async def get_articles(
-        self, db_session: AsyncSession
-    ) -> Union[List[Article_schema], None]:
+        self, skip: int, limit: int, db_session: AsyncSession
+    ) -> Union[List[Article], None]:
         """
         Gets all articles from the database.
         """
         try:
             res: AsyncResult = await db_session.scalars(select(Article))
-            articles_list: List[Article_schema] = res.all()
+            articles_list: List[Article] = res.all()
             if articles_list is not None:
-                return articles_list
+                return articles_list[skip : skip + limit]
         except:
             raise HTTPException(
                 status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -62,8 +62,8 @@ class Articles_service:
             )
             if res.rowcount != 0:
                 await db_session.commit()
-                return {"articleID": article_id, "status": "Article deleted"}
-            return {"articleID": article_id, "status": "Article not found"}
+                return {"articleId": article_id, "status": "Article deleted"}
+            return {"articleId": article_id, "status": "Article not found"}
         except:
             raise HTTPException(
                 status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -71,7 +71,7 @@ class Articles_service:
             )
 
     async def create_article(
-        self, article: Article_schema, db_session: AsyncSession
+        self, article: CreateArticle, db_session: AsyncSession
     ) -> ArticleCreated:
         """
         Inserts the provided article in the database.
@@ -95,7 +95,7 @@ class Articles_service:
             )
 
     async def update_article(
-        self, article_id: int, article: Article_schema, db_session: AsyncSession
+        self, article_id: int, article: CreateArticle, db_session: AsyncSession
     ):
         """
         Updates the specified article in the database.

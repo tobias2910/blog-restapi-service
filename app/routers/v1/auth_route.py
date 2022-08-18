@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 
 from app.services.auth_service import auth_service
-from app.schemas.auth_schema import Auth_schema
+from app.schemas.auth_schema import AuthSchema
 
 # from app.schemas.token_schema import Auth_Token
 
@@ -20,7 +20,7 @@ router = APIRouter(tags=[TAG_INFORMATION["name"]])
     status_code=status.HTTP_200_OK,
     # response_model=Auth_Token
 )
-async def authentication(auth_data: Auth_schema):
+async def authentication(auth_data: AuthSchema):
     auth_tokens = await auth_service.authenticate_user(
         auth_data.email, auth_data.password
     )

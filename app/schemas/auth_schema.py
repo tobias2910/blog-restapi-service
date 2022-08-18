@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr
 
 
-class Auth_schema(BaseModel):
+class AuthSchema(BaseModel):
     """
     Base model for the Authentication
     """

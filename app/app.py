@@ -16,6 +16,7 @@ app = FastAPI(
     },
     openapi_url=f"{settings.API_PATH}/openapi.json",
     openapi_tags=api_open_tag_information,
+    docs_url=f"/api/swagger",
 )
 
 # Add the middlewares to the chain
