@@ -1,5 +1,15 @@
 from typing import Any, Dict, Optional
+
+from dotenv import load_dotenv  # type: ignore
+
 from pydantic import BaseSettings, EmailStr, PostgresDsn, validator
+
+"""
+ Using this function to avoid issues, that the .env file is 
+ not being loaded correctly. Further information:
+ https://github.com/pydantic/pydantic/issues/1368
+"""
+load_dotenv()
 
 
 class Settings(BaseSettings):

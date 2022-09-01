@@ -128,12 +128,16 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-
+# MacOS auto generated file
 .DS_Store
 
-/include
+# Venv folders
+include/
+bin/
+
+# Poetry
+poetry.lock
 
 /typings
 
 
-/bin

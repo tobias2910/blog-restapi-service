@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
+
 from jose import jwt
+from jose.exceptions import ExpiredSignatureError
 
 from app.config.settings import settings
 from app.schemas.token_schema import Token_Types, Token, Auth_Token, Token_Payload
@@ -51,7 +53,7 @@ class Token_service:
             settings.JWT_REFRESH_SECRET_KEY,
         )
 
-        return Auth_Token(
+        auth_token = Auth_Token(
             __root__={
                 Token_Types.ACCESS_TOKEN: Token(
                     token=access_token, expires=access_token_expire
@@ -62,13 +64,20 @@ class Token_service:
             }
         )
 
+        return auth_token.dict()["__root__"]
+
     def decode_token(self, token: str) -> Token_Payload:
         """
         Decodes the provided token and returns it
         """
-        token_payload = jwt.decode(token, settings.JWT_SECRET_KEY, settings.ALGORITHM)
+        try:
+            token_payload = jwt.decode(
+                token, settings.JWT_SECRET_KEY, settings.ALGORITHM
+            )
 
-        return Token_Payload(**token_payload)
+            return Token_Payload(**token_payload)
+        except ExpiredSignatureError:
+            raise Exception()
 
 
 token_service = Token_service()

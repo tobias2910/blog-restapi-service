@@ -39,7 +39,7 @@ class ArticleCreated(Article):
     """
 
     id: int
-    tags: str = Field(example=["React", "TailwindCSS", "NextJS"])
+    tags: List[str] = Field(example=["React", "TailwindCSS", "NextJS"])
     content: str = Field(example="My new content in markdown")
     created_at: date
 
@@ -59,7 +59,7 @@ class ArticleUpdated(BaseModel):
     Schema for a updated article
     """
 
-    article_Id: int = Field(example=32)
+    article_id: int = Field(example=32)
     status: str = Field(example="Article updated")
 
 
@@ -68,7 +68,7 @@ class ArticleDeleted(BaseModel):
     Schema for a deleted article
     """
 
-    article_Id: int = Field(example=43)
+    article_id: int = Field(example=43)
     status: str = Field(example="Article deleted")
 
 

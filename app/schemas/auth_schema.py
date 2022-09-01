@@ -1,5 +1,7 @@
 from pydantic import BaseModel, EmailStr
 
+from app.schemas.token_schema import Token
+
 
 class AuthSchema(BaseModel):
     """
@@ -8,3 +10,20 @@ class AuthSchema(BaseModel):
 
     email: EmailStr
     password: str
+
+
+class RefreshSchema(BaseModel):
+    """
+    Model for refreshing an outdated access token
+    """
+
+    refresh_token: str
+
+
+class AuthTokenSchema(BaseModel):
+    """
+    Model representing the access tokens
+    """
+
+    access_token: Token
+    refresh_token: Token

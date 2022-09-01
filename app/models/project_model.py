@@ -8,7 +8,7 @@ class Project(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
-    imageUrl = Column(String)
+    image_url = Column(String)
     description = Column(String)
     project_url = Column(String)
     tags = Column(String)

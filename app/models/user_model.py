@@ -21,7 +21,9 @@ class User(Base):
         """
         Hash the provided password and store in the password field
         """
-        self.password = bcrypt.hashpw(hash_password, bcrypt.gensalt())
+        self.password = bcrypt.hashpw(
+            hash_password.encode("utf-8"), bcrypt.gensalt()
+        ).decode("utf-8")
 
     def verify_password(self, password: str) -> bool:
         """

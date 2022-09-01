@@ -7,7 +7,7 @@ from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncResult, AsyncSession
 
 from app.models.article_model import Article
-from app.schemas.articles_schema import ArticleCreated, CreateArticle
+from app.schemas.articles_schema import ArticleCreated, CreateArticle, ArticleUpdated
 
 
 class Articles_service:
@@ -62,8 +62,8 @@ class Articles_service:
             )
             if res.rowcount != 0:
                 await db_session.commit()
-                return {"articleId": article_id, "status": "Article deleted"}
-            return {"articleId": article_id, "status": "Article not found"}
+                return {"article_id": article_id, "status": "Article deleted"}
+            return {"article_id": article_id, "status": "Article not found"}
         except:
             raise HTTPException(
                 status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -86,6 +86,7 @@ class Articles_service:
             db_session.add(new_article)
 
             await db_session.commit()
+            new_article.tags = new_article.tags.split(";")
 
             return new_article
         except:
@@ -96,7 +97,7 @@ class Articles_service:
 
     async def update_article(
         self, article_id: int, article: CreateArticle, db_session: AsyncSession
-    ):
+    ) -> ArticleUpdated:
         """
         Updates the specified article in the database.
         """
@@ -114,8 +115,8 @@ class Articles_service:
 
             if res.rowcount != 0:
                 await db_session.commit()
-                return {"articleID": article_id, "status": "Article updated"}
-            return {"articleID": article_id, "status": "Article not found"}
+                return {"article_id": article_id, "status": "Article updated"}
+            return {"article_id": article_id, "status": "Article not found"}
 
         except:
             raise HTTPException(

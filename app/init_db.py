@@ -1,7 +1,9 @@
 from typing import Union
+
 import asyncio
-from db.base import async_session
 from sqlalchemy.orm import Session
+
+from app.db.base import async_session
 from app.services.user_service import User_service
 from app.config.settings import settings
 from app.schemas.user_schema import User
@@ -12,10 +14,12 @@ async def main():
         session: Session
         async with session.begin:
             user_service = User_service(session)
-            res: Union[User, None] = await user_service.get_user(settings.ADMIN_USER)
+            res: Union[User, None] = await user_service.get_user(
+                session, settings.ADMIN_USER
+            )
             if res is None:
                 await user_service.create_new_user(
-                    settings.ADMIN_USER, settings.ADMIN_PW
+                    session, settings.ADMIN_USER, settings.ADMIN_PW
                 )
 
 
