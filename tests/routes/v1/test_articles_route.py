@@ -1,15 +1,14 @@
 from typing import Dict, List
 
-from httpx import AsyncClient
+from src.config.settings import settings
+from src.schemas.articles_schema import ArticleDB
 from fastapi import status
+from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.config.settings import settings
-from app.schemas.articles_schema import ArticleDB
-
 from tests.utils.article import (
-    get_fake_article,
     create_article_in_db,
+    get_fake_article,
     remove_article_in_db,
 )
 

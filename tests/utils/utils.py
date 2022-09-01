@@ -1,7 +1,7 @@
 from typing import Dict
 
+from src.config.settings import settings
 from httpx import AsyncClient
-from app.config.settings import settings
 
 
 async def get_auth_token_header(client: AsyncClient) -> Dict[str, str]:
