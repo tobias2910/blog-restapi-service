@@ -19,6 +19,17 @@ class ArticlesService:
     ) -> Union[Article, None]:
         """
         Gets the specified article from the database.
+
+        Args:
+            article_id: The ID of the article to obtain from the database
+            db_session: The session to the database
+
+        Returns:
+            The result of the database. Can be either of type ``Article`` or ``None``, in
+                case no row matches the provided ID.
+
+        Raises:
+            HTTPException: Is being thrown as soon as an error occurs when obtaining the article
         """
         try:
             res: AsyncResult = await db_session.execute(
@@ -114,8 +125,9 @@ class ArticlesService:
 
             if res.rowcount != 0:
                 await db_session.commit()
-                return {"article_id": article_id, "status": "Article updated"}
-            return {"article_id": article_id, "status": "Article not found"}
+                return ArticleUpdated(article_id=article_id, status="Article updated")
+            else:
+                return ArticleUpdated(article_id=article_id, status="Article not found")
 
         except BaseException:
             raise HTTPException(

@@ -1,8 +1,7 @@
 from typing import Union
 
 from src.config.settings import settings
-from sqlalchemy.ext.asyncio import (AsyncSession,
-                                    create_async_engine)  # type: ignore
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 

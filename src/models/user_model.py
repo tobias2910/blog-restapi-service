@@ -14,7 +14,7 @@ class User(Base):
 
     @property
     def hash_password(self):
-        raise AttributeError("Password not readable")
+        raise AttributeError("Missing")
 
     @hash_password.setter
     def hash_password(self, hash_password: str):

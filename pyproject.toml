@@ -1,41 +1,46 @@
 [tool.poetry]
 name = "blog-restapi-service"
 version = "0.1.0"
-description = ""
+description = "API service for the blog database"
 authors = ["tobias2910 <33369379+tobias2910@users.noreply.github.com>"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+alembic = "^1.8.1"
+asyncpg = "^0.26.0"
+bcrypt = "^3.2.2"
 fastapi = "^0.79.0"
 uvicorn = "^0.18.2"
-SQLAlchemy = "^1.4.39"
-alembic = "^1.8.1"
+python = "^3.9"
 psycopg2-binary = "^2.9.3"
 pydantic = {extras = ["email"], version = "^1.9.1"}
 python-dotenv = "^0.20.0"
-asyncpg = "^0.26.0"
 python-jose = "^3.3.0"
-bcrypt = "^3.2.2"
 sentry-sdk = {extras = ["fastapi"], version = "^1.9.5"}
+SQLAlchemy = "^1.4.39"
 
 [tool.poetry.dev-dependencies]
-autopep8 = "^1.6.0"
-pytest = "^7.1.2"
-requests = "^2.28.1"
-Faker = "^14.1.0"
-pytest-asyncio = "^0.19.0"
 autoflake = "^1.4"
-httpx = "^0.23.0"
+autopep8 = "^1.6.0"
+black = "^22.8.0"
+Faker = "^14.1.0"
 flake8 = "^5.0.4"
-mypy = "^0.971"
-isort = "^5.10.1"
-pytest-cov = "^3.0.0"
-mkdocs-material = "^8.4.2"
 flake8-bugbear = "^22.8.23"
-flake8-eradicate = "^1.3.0"
-pep8-naming = "^0.13.2"
 flake8-comprehensions = "^3.10.0"
-mkdocstrings = "^0.19.0"
+flake8-eradicate = "^1.3.0"
+httpx = "^0.23.0"
+isort = "^5.10.1"
+mkdocstrings = {extras = ["python"], version = "^0.19.0"}
+mkdocs-material = "^8.4.2"
+mypy = "^0.971"
+requests = "^2.28.1"
+pep8-naming = "^0.13.2"
+pre-commit = "^2.20.0"
+pymdown-extensions = "^9.5"
+pytest = "^7.1.2"
+pytest-cov = "^3.0.0"
+pytest-asyncio = "^0.19.0"
+tryceratops = "^1.1.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -43,10 +48,12 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.isort]
 profile = "black"
+src_paths = ["src", "tests"]
 
 [tool.pyright]
 reportGeneralTypeIssues = false
 reportUnknownMemberType = false
+reportUnknownVariableType = false
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
@@ -56,3 +63,14 @@ pythonpath = [
 
 [tool.autoflake]
 check = true
+
+[tool.mypy]
+disallow_any_unimported = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+strict_equality = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_return_any = true
+check_untyped_defs = true
+show_error_codes = true
