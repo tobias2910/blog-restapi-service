@@ -14,14 +14,13 @@ async def main() -> None:
     """Create admin user in the database.
 
     Checks, whether the admin user is already available in the
-    database and if not, creates a new it.
+    database and if not, creates it.
     """
     async with async_session() as session:
         session = cast(AsyncSession, session)
-        async with session.begin:
-            res: Union[UserDB, None] = await user_service.get_user(session, settings.ADMIN_USER)
-            if res is None:
-                await user_service.create_new_user(session, settings.ADMIN_USER, settings.ADMIN_PW)
+        res: Union[UserDB, None] = await user_service.get_user(session, settings.ADMIN_USER)
+        if res is None:
+            await user_service.create_new_user(session, settings.ADMIN_USER, settings.ADMIN_PW)
 
 
 if __name__ == "__main__":

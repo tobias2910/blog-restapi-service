@@ -1,27 +1,33 @@
 """Skills schemas."""
-from typing import List
+from typing import Optional
 
 from pydantic import BaseModel, Field
 
 
-class Article(BaseModel):
-    """Base model for an article."""
+class SkillSchema(BaseModel):
+    """The base model for managing skills."""
 
-    author: str
-    tags: List[str]
-    imageUrl: str  # noqa: N815
-    title: str
-    summary: str = Field(min_length=40, max_length=140)
-    content: str
+    name: str = Field(example="TailwindCSS")
+    experience: int = Field(example=2, ge=1, le=3)
 
 
-class ArticleCreated(Article):
-    """Response for an created article."""
+class SkillDB(SkillSchema):
+    """The model representing the result from the DB."""
 
-    created: str
+    id: int
 
 
-class ArticleUpdated(ArticleCreated):
-    """Response for an updated article."""
+class UpdateSkill(SkillSchema):
+    """Schema for updating an skill.
 
-    updated: str
+    Inherits from the Skill model and make all fields optional,
+    since there is no partial option available in Pydantic :(.
+    """
+
+    __annotations__ = {k: Optional[v] for k, v in SkillSchema.__annotations__.items()}
+
+
+class SkillAdjusted(SkillDB):
+    """The model for deleting a user."""
+
+    status: str = Field(example="User successfully deleted")

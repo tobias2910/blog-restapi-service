@@ -1,5 +1,5 @@
 """User model for the database."""
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, Integer, String
 
 from src.db.base import Base
 
@@ -10,6 +10,6 @@ class Skill(Base):
     __tablename__ = "skills"
 
     id = Column(Integer, primary_key=True, index=True)
-    category_id = Column(Integer, ForeignKey("categories.id"))
     name = Column(String, index=True)
-    skill_level_id = Column(Integer, ForeignKey("skill_levels.id"))
+    category = Column(Integer)
+    skill_level = Column(Integer)

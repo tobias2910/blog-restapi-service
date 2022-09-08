@@ -3,7 +3,13 @@ from typing import Dict, List
 
 from fastapi import APIRouter, Depends
 
-from src.routers.v1 import articles_route, auth_route, projects_route, user_route
+from src.routers.v1 import (
+    articles_route,
+    auth_route,
+    projects_route,
+    skill_route,
+    user_route,
+)
 from src.util.jwt_authentication import JWTAuthentication
 
 api_router = APIRouter()
@@ -22,6 +28,11 @@ api_router.include_router(
     dependencies=[Depends(JWTAuthentication(auto_error=False))],
 )
 api_router.include_router(
+    skill_route.router,
+    prefix="/skills",
+    dependencies=[Depends(JWTAuthentication(auto_error=False))],
+)
+api_router.include_router(
     user_route.router,
     prefix="/users",
     dependencies=[Depends(JWTAuthentication(auto_error=False))],
@@ -31,4 +42,5 @@ api_router.include_router(
 api_open_tag_information.append(auth_route.TAG_INFORMATION)
 api_open_tag_information.append(articles_route.TAG_INFORMATION)
 api_open_tag_information.append(projects_route.TAG_INFORMATION)
+api_open_tag_information.append(skill_route.TAG_INFORMATION)
 api_open_tag_information.append(user_route.TAG_INFORMATION)
