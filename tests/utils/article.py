@@ -1,9 +1,10 @@
 from typing import Any, Dict
 
-from src.schemas.articles_schema import CreateArticle
-from src.services.articles_service import articles_service
 from faker import Faker
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.schemas.articles_schema import CreateArticle
+from src.services.articles_service import articles_service
 
 
 def get_fake_article() -> Dict[str, Any]:

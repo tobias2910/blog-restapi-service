@@ -1,20 +1,31 @@
 [flake8]
-ignore = 
+ignore =
     E203,
     # flake8-bugbear
-    # Avoding issues with setting default parameters for routes in FastAPI 
+    # Avoding issues with setting default parameters for routes in FastAPI
     B008,
 
 classmethod-decorators =
     classmethod,
     validator
 
-enable-extensions = 
+enable-extensions =
     G,
 
 max-complexity =
-    10  
+    10
 
 max-line-length = 110
 
-exclude = git,__pycache__,old,alembic,.venv,.eggs,.tox,include,typings,lib
+exclude =
+    alembic/*,
+    tests/*,
+    git,
+    __pycache__,
+    old,
+    .venv,
+    .eggs,
+    .tox,
+    include,
+    typings,
+    lib,

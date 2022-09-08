@@ -1,11 +1,11 @@
 from typing import Dict, List
 
-from src.config.settings import settings
-from src.schemas.articles_schema import ArticleDB
 from fastapi import status
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.config.settings import settings
+from src.schemas.articles_schema import ArticleDB
 from tests.utils.article import (
     create_article_in_db,
     get_fake_article,
@@ -13,15 +13,11 @@ from tests.utils.article import (
 )
 
 
-async def test_create_article(
-    client: AsyncClient, auth_header: Dict[str, str], db_session: AsyncSession
-):
+async def test_create_article(client: AsyncClient, auth_header: Dict[str, str], db_session: AsyncSession):
     # Arrange
     article = get_fake_article()
     # Act
-    response = await client.post(
-        f"{settings.API_PATH}/articles/", headers=auth_header, json=article
-    )
+    response = await client.post(f"{settings.API_PATH}/articles/", headers=auth_header, json=article)
     # Assert
     assert response.status_code == status.HTTP_201_CREATED
     json_response = response.json()
@@ -41,9 +37,7 @@ async def test_get_article(
     # Arrange
     article = await create_article_in_db(db_session)
     # Act
-    response = await client.get(
-        f"{settings.API_PATH}/articles/{article.id}", headers=auth_header
-    )
+    response = await client.get(f"{settings.API_PATH}/articles/{article.id}", headers=auth_header)
     json_response = response.json()
     # Assert
     assert json_response["author"] == article.author
@@ -62,16 +56,8 @@ async def test_get_articles(
     json_response: List[ArticleDB] = response.json()
     # Assert
     assert isinstance(json_response, List)
-    assert next(
-        article_dict
-        for article_dict in json_response
-        if article_dict["id"] == first_article.id
-    )
-    assert next(
-        article_dict
-        for article_dict in json_response
-        if article_dict["id"] == second_article.id
-    )
+    assert next(article_dict for article_dict in json_response if article_dict["id"] == first_article.id)
+    assert next(article_dict for article_dict in json_response if article_dict["id"] == second_article.id)
     # Cleanup
     await remove_article_in_db(first_article.id, db_session)
     await remove_article_in_db(second_article.id, db_session)
@@ -89,9 +75,7 @@ async def test_update_article(
         headers=auth_header,
         json=update_article,
     )
-    response = await client.get(
-        f"{settings.API_PATH}/articles/{article.id}", headers=auth_header
-    )
+    response = await client.get(f"{settings.API_PATH}/articles/{article.id}", headers=auth_header)
     json_response = response.json()
     # Assert
     assert json_response["author"] == update_article["author"]
@@ -105,9 +89,7 @@ async def test_delete_article(
     # Arrange
     article = await create_article_in_db(db_session)
     # Act
-    response = await client.delete(
-        f"{settings.API_PATH}/articles/{article.id}", headers=auth_header
-    )
+    response = await client.delete(f"{settings.API_PATH}/articles/{article.id}", headers=auth_header)
     json_response = response.json()
     # Assert
     assert json_response["article_id"]

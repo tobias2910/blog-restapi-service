@@ -1,9 +1,13 @@
-from src.db.base import Base
+"""Article model for the database."""
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.dialects.postgresql import DATE
 
+from src.db.base import Base
+
 
 class Article(Base):
+    """Represents the article table in the database."""
+
     __tablename__ = "articles"
 
     id = Column(Integer, primary_key=True, index=True)

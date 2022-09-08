@@ -1,14 +1,15 @@
-from src.db.base import Base
+"""User model for the database."""
 from sqlalchemy import Column, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
+
+from src.db.base import Base
 
 
 class Skill(Base):
+    """Represents the categories table in the database."""
+
     __tablename__ = "skills"
 
     id = Column(Integer, primary_key=True, index=True)
     category_id = Column(Integer, ForeignKey("categories.id"))
-    category = relationship("Category")
     name = Column(String, index=True)
     skill_level_id = Column(Integer, ForeignKey("skill_levels.id"))
-    skill_level = relationship("SkillLevel")

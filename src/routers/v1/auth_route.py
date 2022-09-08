@@ -1,8 +1,10 @@
+"""All authentication related endpoints."""
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from src.db.base import get_session
 from src.schemas.auth_schema import AuthSchema, AuthTokenSchema, RefreshSchema
 from src.services.auth_service import auth_service
-from fastapi import APIRouter, Depends, status
-from sqlalchemy.ext.asyncio import AsyncSession
 
 TAG_INFORMATION = {
     "name": "auth",
@@ -22,10 +24,18 @@ router = APIRouter(tags=[TAG_INFORMATION["name"]])
 async def authentication(
     auth_data: AuthSchema,
     db_session: AsyncSession = Depends(get_session),
-):
-    auth_tokens = await auth_service.authenticate_user(
-        auth_data.email, auth_data.password, db_session
-    )
+) -> AuthTokenSchema:
+    """Endpoint for conducting the authentication.
+
+    Args:
+        auth_data (AuthSchema): JSON that contains the mail address and password of the user.
+        db_session (AsyncSession, optional): The session for the DB that will
+            automatically injected using the ```Depends```functionality of FastAPI.
+
+    Returns:
+        AuthTokenSchema: The new issued access and refresh tokens
+    """
+    auth_tokens = await auth_service.authenticate_user(auth_data.email, auth_data.password, db_session)
 
     return auth_tokens
 
@@ -39,7 +49,15 @@ async def authentication(
 )
 async def refresh_token(
     refresh_token: RefreshSchema,
-):
+) -> AuthTokenSchema:
+    """Endpoint to obtain a new access token based on a valid refresh token.
+
+    Args:
+        refresh_token (RefreshSchema): The refresh token to validated
+
+    Returns:
+        AuthTokenSchema: The new issued access and refresh tokens
+    """
     auth_tokens = await auth_service.refresh_token(refresh_token.refresh_token)
 
     return auth_tokens

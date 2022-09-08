@@ -1,11 +1,11 @@
 import asyncio
 
 import pytest
-from src.db.base import async_session
-from src.main import app
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.db.base import async_session
+from src.main import app
 from tests.utils.utils import get_auth_token_header
 
 pytest_plugins = "pytest_asyncio"

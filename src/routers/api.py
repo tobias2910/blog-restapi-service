@@ -1,8 +1,10 @@
+"""Provides a new router instance, containing all the endpoints available."""
 from typing import Dict, List
+
+from fastapi import APIRouter, Depends
 
 from src.routers.v1 import articles_route, auth_route, projects_route, user_route
 from src.util.jwt_authentication import JWTAuthentication
-from fastapi import APIRouter, Depends
 
 api_router = APIRouter()
 api_open_tag_information: List[Dict[str, str]] = []

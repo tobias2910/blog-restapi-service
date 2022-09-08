@@ -1,3 +1,4 @@
+"""Reads and provides the environment variables as a dict."""
 from typing import Any, Dict, Optional
 
 from dotenv import load_dotenv
@@ -10,6 +11,8 @@ load_dotenv()
 
 
 class Settings(BaseSettings):
+    """Reads all the environment variables."""
+
     # API base configuration
     API_PATH: str = "/api/v1"
     API_NAME: str = "Blog-RestAPI-service"
@@ -25,13 +28,26 @@ class Settings(BaseSettings):
     POSTGRES_USER: str
     POSTGRES_PW: str
     POSTGRES_DB: str
+
     SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
 
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> str:
+        """Assemble the SQL connection.
+
+        This function is being executed as soon as the class is initialized.
+
+        Args:
+            v (Optional[str]): The already assembled value.
+            values (Dict[str, Any]): The dictionary containing the
+                loaded environment variables.
+
+        Returns:
+            str: The assembled PostgreSQL connection.
+        """
         if isinstance(v, str):
             return v
-        return PostgresDsn.build(
+        return PostgresDsn.build(  # type: ignore[no-any-return]
             scheme="postgresql+asyncpg",
             user=values.get("POSTGRES_USER"),
             password=values.get("POSTGRES_PW"),
@@ -51,7 +67,9 @@ class Settings(BaseSettings):
     ADMIN_PW: str
 
     class Config(BaseSettings.Config):
-        env_file = ".env"
+        """Set the settings."""
+
+        env_file = ".env"  # type: ignore[assignment]
         case_sensitive = True
 
 

@@ -1,3 +1,4 @@
+"""Article schemas."""
 from datetime import date
 from typing import List, Optional, Union
 
@@ -5,9 +6,7 @@ from pydantic import BaseModel, Field
 
 
 class Article(BaseModel):
-    """
-    Base model for an article
-    """
+    """Base model for an article."""
 
     author: str = Field(example="Tobias Caliskan")
     tags: Union[List[str], str] = Field(example=["React", "TailwindCSS", "NextJS"])
@@ -21,22 +20,20 @@ class Article(BaseModel):
     content: Optional[str] = Field(example="The content preferable in markdown")
 
     class Config:
+        """Enable the ORM compatibility for SQLAlchemy."""
+
         orm_mode = True
 
 
 class CreateArticle(Article):
-    """
-    Schema for creating a new article
-    """
+    """Schema for creating a new article."""
 
     tags: List[str] = Field(example=["React", "TailwindCSS", "NextJS"])
     content: str = Field(example="My awesome title")
 
 
 class ArticleCreated(Article):
-    """
-    Schema for a created article
-    """
+    """Schema for a created article."""
 
     id: int
     tags: List[str] = Field(example=["React", "TailwindCSS", "NextJS"])
@@ -45,8 +42,9 @@ class ArticleCreated(Article):
 
 
 class UpdateArticle(Article):
-    """
-    Schema for updating an article. Inherits from the Article
+    """Schema for updating an article.
+
+    Inherits from the Article
     model and make all fields optional, since there is no partial
     option available in Pydantic :(
     """
@@ -55,27 +53,21 @@ class UpdateArticle(Article):
 
 
 class ArticleUpdated(BaseModel):
-    """
-    Schema for a updated article
-    """
+    """Schema for a updated article."""
 
     article_id: int = Field(example=32)
     status: str = Field(example="Article updated")
 
 
 class ArticleDeleted(BaseModel):
-    """
-    Schema for a deleted article
-    """
+    """Schema for a deleted article."""
 
     article_id: int = Field(example=43)
     status: str = Field(example="Article deleted")
 
 
 class ArticleDB(Article):
-    """
-    Schema representing the article obtained from the database
-    """
+    """Schema for an article obtained from the database."""
 
     id: int
     created_at: date

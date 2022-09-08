@@ -1,15 +1,11 @@
 {
+    "files.autoSave": "afterDelay",
     "python.defaultInterpreterPath": "/users/tobiascaliskan/desktop/blog/blog-restapi-service/bin/python3",
-    "python.analysis.typeCheckingMode": "strict",
     "python.linting.enabled": true,
-    "editor.formatOnSave": true,
-    "cSpell.words": [
-        "dotenv",
-        "pydantic",
-        "SQLALCHEMY",
-        "uvicorn"
-    ],
+    "python.linting.flake8Enabled": true,
     "python.linting.mypyEnabled": true,
+    "python.linting.lintOnSave": true,
+    "editor.formatOnSave": true,
     "yaml.schemas": {
         "https://squidfunk.github.io/mkdocs-material/schema.json": "mkdocs.yml"
     }

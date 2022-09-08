@@ -1,12 +1,11 @@
+"""Skills schemas."""
 from typing import List
 
 from pydantic import BaseModel, Field
 
 
 class Article(BaseModel):
-    """
-    Base model for an article
-    """
+    """Base model for an article."""
 
     author: str
     tags: List[str]
@@ -17,16 +16,12 @@ class Article(BaseModel):
 
 
 class ArticleCreated(Article):
-    """
-    Response for an created article
-    """
+    """Response for an created article."""
 
     created: str
 
 
 class ArticleUpdated(ArticleCreated):
-    """
-    Response for an updated article
-    """
+    """Response for an updated article."""
 
     updated: str

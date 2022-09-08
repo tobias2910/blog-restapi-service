@@ -1,3 +1,5 @@
+"""Initializes the App with the provided configurations and middlewares."""
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
