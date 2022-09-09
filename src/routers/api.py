@@ -7,7 +7,7 @@ from src.routers.v1 import (
     articles_route,
     auth_route,
     projects_route,
-    skill_route,
+    skills_route,
     user_route,
 )
 from src.util.jwt_authentication import JWTAuthentication
@@ -28,7 +28,7 @@ api_router.include_router(
     dependencies=[Depends(JWTAuthentication(auto_error=False))],
 )
 api_router.include_router(
-    skill_route.router,
+    skills_route.router,
     prefix="/skills",
     dependencies=[Depends(JWTAuthentication(auto_error=False))],
 )
@@ -42,5 +42,5 @@ api_router.include_router(
 api_open_tag_information.append(auth_route.TAG_INFORMATION)
 api_open_tag_information.append(articles_route.TAG_INFORMATION)
 api_open_tag_information.append(projects_route.TAG_INFORMATION)
-api_open_tag_information.append(skill_route.TAG_INFORMATION)
+api_open_tag_information.append(skills_route.TAG_INFORMATION)
 api_open_tag_information.append(user_route.TAG_INFORMATION)

@@ -11,5 +11,5 @@ class Skill(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
-    category = Column(Integer)
-    skill_level = Column(Integer)
+    category = Column(String)
+    experience = Column(Integer)

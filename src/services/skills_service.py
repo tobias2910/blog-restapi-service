@@ -106,8 +106,8 @@ class SkillsService:
         Returns:
             SkillCreated: The created skill including the ID.
         """
-        create_skill = skill.dict()
         try:
+            create_skill = skill.dict()
             new_skill = Skill(
                 **create_skill,
             )
