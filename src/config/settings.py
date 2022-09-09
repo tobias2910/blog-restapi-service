@@ -72,6 +72,7 @@ class Settings(BaseSettings):
     class Config(BaseSettings.Config):
         """Set the settings."""
 
+        secrets_dir = "run/secrets"  # type: ignore[assignment]
         env_file = ".env"  # type: ignore[assignment]
         case_sensitive = True
 
