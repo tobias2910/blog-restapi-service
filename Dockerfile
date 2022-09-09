@@ -11,7 +11,7 @@ RUN apt-get update && apt-get upgrade -y \
     && apt-get install --no-install-recommends -y \
     curl \
     # Install poetry
-    && curl -sSL 'https://install.python-poetry.org' | python - \
+    && curl -sSL 'https://install.python-poetry.org' | python3 - \
     # Cleaning cache:
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
@@ -31,4 +31,4 @@ COPY . /app
 RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
 USER appuser
 # Start the uvicorn server
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
