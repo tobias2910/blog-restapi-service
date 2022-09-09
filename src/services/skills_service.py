@@ -67,7 +67,7 @@ class SkillsService:
                 "Error obtaining all skills",
             ) from BaseException
 
-    async def delete_article(self, skill_id: int, db_session: AsyncSession) -> SkillAdjusted:
+    async def delete_skill(self, skill_id: int, db_session: AsyncSession) -> SkillAdjusted:
         """Delete the specified skill from the database.
 
         Args:
@@ -106,8 +106,8 @@ class SkillsService:
         Returns:
             SkillCreated: The created skill including the ID.
         """
-        create_skill = skill.dict()
         try:
+            create_skill = skill.dict()
             new_skill = Skill(
                 **create_skill,
             )

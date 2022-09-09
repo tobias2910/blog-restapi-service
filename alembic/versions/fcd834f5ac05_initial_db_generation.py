@@ -1,15 +1,15 @@
 """Initial DB generation
 
-Revision ID: 0a5f236fdb8e
+Revision ID: fcd834f5ac05
 Revises:
-Create Date: 2022-09-08 21:19:22.465135
+Create Date: 2022-09-09 07:54:02.792008
 
 """
 import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = "0a5f236fdb8e"
+revision = "fcd834f5ac05"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -47,8 +47,8 @@ def upgrade() -> None:
         "skills",
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("name", sa.String(), nullable=True),
-        sa.Column("category", sa.Integer(), nullable=True),
-        sa.Column("skill_level", sa.Integer(), nullable=True),
+        sa.Column("category", sa.String(), nullable=True),
+        sa.Column("experience", sa.Integer(), nullable=True),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(op.f("ix_skills_id"), "skills", ["id"], unique=False)

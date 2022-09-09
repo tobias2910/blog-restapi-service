@@ -66,6 +66,9 @@ class Settings(BaseSettings):
     ADMIN_USER: EmailStr
     ADMIN_PW: str
 
+    # Sentry settings
+    SENTRY_DSN: str
+
     class Config(BaseSettings.Config):
         """Set the settings."""
 
