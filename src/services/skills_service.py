@@ -67,7 +67,7 @@ class SkillsService:
                 "Error obtaining all skills",
             ) from BaseException
 
-    async def delete_article(self, skill_id: int, db_session: AsyncSession) -> SkillAdjusted:
+    async def delete_skill(self, skill_id: int, db_session: AsyncSession) -> SkillAdjusted:
         """Delete the specified skill from the database.
 
         Args:

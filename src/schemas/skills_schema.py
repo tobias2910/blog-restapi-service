@@ -33,7 +33,8 @@ class UpdateSkill(SkillSchema):
     __annotations__ = {k: Optional[v] for k, v in SkillSchema.__annotations__.items()}
 
 
-class SkillAdjusted(SkillDB):
+class SkillAdjusted(BaseModel):
     """The model for deleting a user."""
 
+    skill_id: int
     status: str = Field(example="User successfully deleted")

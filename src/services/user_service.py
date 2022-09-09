@@ -35,7 +35,7 @@ class UserService:
                 new_user = User(email=mail, hash_password=password)
                 db_session.add(new_user)
 
-                await db_session.commit()
+                await db_session.commit()  # type: ignore[func-returns-value]
 
                 return {"email": mail, "status": "User successfully created"}
             raise HTTPException(  # noqa: TC301
@@ -96,7 +96,7 @@ class UserService:
         try:
             res: AsyncResult = await db_session.execute(delete(User).where(User.email == mail))
             if res.rowcount != 0:
-                await db_session.commit()
+                await db_session.commit()  # type: ignore[func-returns-value]
                 return {"email": mail, "status": "User deleted"}
             else:
                 return {"email": mail, "status": "User not found"}
