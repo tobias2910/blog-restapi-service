@@ -1,4 +1,4 @@
-name: create_docs
+name: Deploy and publish documentation
 on:
   push:
     branches:
