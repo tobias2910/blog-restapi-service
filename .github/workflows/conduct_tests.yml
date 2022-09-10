@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/get_poetry
+      - uses: ./.github/actions/obtain_poetry
       - run: poetry run pre-commit run --all-files
       
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/get_poetry
+      - uses: ./.github/actions/obtain_poetry
       - run: poetry run pytest
