@@ -7,24 +7,21 @@ on:
       - "**"
       
 jobs: 
-  test:
+  debug:
+    name: Debug
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - run: echo [ ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }} == "30" ] || { echo invalid && false; }  && echo "valid"
-        env:
-          API_CONTACT_NAME: ${{ secrets.API_CONTACT_NAME }}
-          API_CONTACT_MAIL: ${{ secrets.API_CONTACT_MAIL }}
-          API_CONTACT_SITE: ${{ secrets.API_CONTACT_SITE }}
-          POSTGRES_SERVER: ${{ secrets.POSTGRES_SERVER }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PW: ${{ secrets.POSTGRES_PW }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          ADMIN_USER: ${{ secrets.ADMIN_USER }}
-          ADMIN_PW: ${{ secrets.ADMIN_PW }}
-          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
-          JWT_REFRESH_SECRET_KEY: ${{ secrets.JWT_REFRESH_SECRET_KEY }}
-          ALGORITHM: ${{ secrets.ALGORITHM }}
-          ACCESS_TOKEN_EXPIRE_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
-          REFRESH_TOKEN_EXPIRE_MINUTES: ${{ secrets.REFRESH_TOKEN_EXPIRE_MINUTES }}
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up secret file
+      env:
+        DEBUG_PASSWORD: ${{ secrets.API_CONTACT_MAIL }}
+        DEBUG_SECRET_KEY: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
+      run: |
+        echo $DEBUG_PASSWORD >> secrets.txt
+        echo $DEBUG_SECRET_KEY >> secrets.txt
+
+    - name: Run tmate
+      uses: mxschmitt/action-tmate@v2
