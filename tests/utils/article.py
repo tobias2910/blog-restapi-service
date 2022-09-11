@@ -3,7 +3,7 @@ from typing import Any, Dict
 from faker import Faker
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.schemas.articles_schema import CreateArticle
+from src.schemas.articles_schema import ArticleCreated, CreateArticle
 from src.services.articles_service import articles_service
 
 
@@ -22,11 +22,11 @@ def get_fake_article() -> Dict[str, Any]:
     return article
 
 
-async def create_article_in_db(db_session: AsyncSession):
+async def create_article_in_db(db_session: AsyncSession) -> ArticleCreated:
     article = CreateArticle(**get_fake_article())
     response = await articles_service.create_article(article, db_session)
     return response
 
 
-async def remove_article_in_db(article_id: int, db_session: AsyncSession):
+async def remove_article_in_db(article_id: int, db_session: AsyncSession) -> None:
     await articles_service.delete_article(article_id, db_session)

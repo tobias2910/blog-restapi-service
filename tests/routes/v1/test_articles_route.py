@@ -22,7 +22,7 @@ async def test_create_article(client: AsyncClient, auth_header: Dict[str, str], 
     assert response.status_code == status.HTTP_201_CREATED
     json_response = response.json()
     assert json_response["author"] == article["author"]
-    assert json_response["tags"] == ";".join(article["tags"])
+    assert json_response["tags"] == article["tags"]
     assert json_response["image_url"] == article["image_url"]
     assert json_response["title"] == article["title"]
     assert json_response["description"] == article["description"]
@@ -49,18 +49,15 @@ async def test_get_articles(
     client: AsyncClient, db_session: AsyncSession, auth_header: Dict[str, str]
 ) -> None:
     # Arrange
-    first_article = await create_article_in_db(db_session)
-    second_article = await create_article_in_db(db_session)
+    article = await create_article_in_db(db_session)
     # Act
     response = await client.get(f"{settings.API_PATH}/articles/", headers=auth_header)
     json_response: List[ArticleDB] = response.json()
     # Assert
     assert isinstance(json_response, List)
-    assert next(article_dict for article_dict in json_response if article_dict["id"] == first_article.id)
-    assert next(article_dict for article_dict in json_response if article_dict["id"] == second_article.id)
+    assert next(article_dict for article_dict in json_response if article_dict["id"] == article.id)
     # Cleanup
-    await remove_article_in_db(first_article.id, db_session)
-    await remove_article_in_db(second_article.id, db_session)
+    await remove_article_in_db(article.id, db_session)
 
 
 async def test_update_article(
