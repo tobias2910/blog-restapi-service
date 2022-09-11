@@ -2,7 +2,6 @@ import asyncio
 
 import pytest
 from httpx import AsyncClient
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.base import async_session
 from src.main import app
@@ -31,7 +30,6 @@ async def db_session():
     Creates a DB session object for the test session.
     """
     async with async_session() as session:
-        session: AsyncSession
         yield session
         await session.close()
 
