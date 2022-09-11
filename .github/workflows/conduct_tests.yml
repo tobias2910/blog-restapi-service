@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: [ ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }} == "30" ] || { echo invalid && false; }  && echo "valid"
+      - run: echo [ ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }} == "30" ] || { echo invalid && false; }  && echo "valid"
         env:
           API_CONTACT_NAME: ${{ secrets.API_CONTACT_NAME }}
           API_CONTACT_MAIL: ${{ secrets.API_CONTACT_MAIL }}
