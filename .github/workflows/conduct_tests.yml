@@ -7,16 +7,13 @@ on:
       - "**"
       
 jobs: 
-  debug:
-    name: Debug
+  test:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Check out code
-      uses: actions/checkout@v2
-
-    - name: Set up secret file
-      env:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup_poetry_env
+      - run: poetry run pytest
+        env:
           API_CONTACT_NAME: ${{ secrets.API_CONTACT_NAME }}
           API_CONTACT_MAIL: ${{ secrets.API_CONTACT_MAIL }}
           API_CONTACT_SITE: ${{ secrets.API_CONTACT_SITE }}
@@ -32,6 +29,3 @@ jobs:
           ACCESS_TOKEN_EXPIRE_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
           REFRESH_TOKEN_EXPIRE_MINUTES: ${{ secrets.REFRESH_TOKEN_EXPIRE_MINUTES }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-      run: |
-        echo ${{secrets.API_CONTACT_MAIL}} | sed 's/./& /g'
-        echo ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}} | sed 's/./& /g'
