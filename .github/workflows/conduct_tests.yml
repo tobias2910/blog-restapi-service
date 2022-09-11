@@ -6,20 +6,12 @@ on:
     branches:
       - "**"
       
-jobs:
-  pre-commit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./.github/actions/setup_poetry_env
-      - run: poetry run pre-commit run --all-files
-      
+jobs: 
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/setup_poetry_env
-      - run: poetry run pytest
+      - run: echo Access Expire is in ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
         env:
           API_CONTACT_NAME: ${{ secrets.API_CONTACT_NAME }}
           API_CONTACT_MAIL: ${{ secrets.API_CONTACT_MAIL }}
