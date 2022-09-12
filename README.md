@@ -1,7 +1,7 @@
 # Blog REST API Service
 
 [![Test](https://github.com/tobias2910/blog-restapi-service/actions/workflows/conduct_tests.yml/badge.svg)](https://github.com/tobias2910/blog-restapi-service/actions/workflows/conduct_tests.yml)
-[![Documentation](https://img.shields.io/badge/license-MIT-brightgreen)
+[![Documentation](https://img.shields.io/badge/license-MIT-brightgreen)]
 ---
 
 This is a REST API build using the FAST API framework. It has the purpose to to provide the capabilities to manage
