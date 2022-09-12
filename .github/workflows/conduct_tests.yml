@@ -5,8 +5,15 @@ on:
   push:
     branches:
       - "**"
+jobs:
+
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup_poetry_env
+      - run: poetry run pre-commit run --all-files
       
-jobs: 
   test:
     runs-on: ubuntu-latest
     steps:
