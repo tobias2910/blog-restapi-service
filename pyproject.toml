@@ -10,7 +10,7 @@ alembic = "^1.8.1"
 asyncpg = "^0.26.0"
 bcrypt = "^3.2.2"
 fastapi = "^0.79.0"
-uvicorn = "^0.18.2"
+uvicorn = "^0.18.3"
 python = "^3.9"
 psycopg2-binary = "^2.9.3"
 pydantic = {extras = ["email"], version = "^1.9.1"}
