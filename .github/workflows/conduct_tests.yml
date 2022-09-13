@@ -19,7 +19,9 @@ jobs:
       - name: Setup Poetry environment
         uses: ./.github/actions/setup_poetry_env
       - name: Perform the tests
-        run: poetry run coverage run -m pytest
+        run: |
+          poetry run coverage run -m pytest
+          poetry run coverage report -m
         env:
           API_CONTACT_NAME: ${{ secrets.API_CONTACT_NAME }}
           API_CONTACT_MAIL: ${{ secrets.API_CONTACT_MAIL }}
