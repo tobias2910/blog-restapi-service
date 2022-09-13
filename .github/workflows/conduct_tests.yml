@@ -16,8 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/setup_poetry_env
-      - run: poetry run pytest
+      - name: Setup Poetry environment
+        uses: ./.github/actions/setup_poetry_env
+      - name: Perform the tests
+        run: poetry run coverage run -m pytest && coverage report -m
         env:
           API_CONTACT_NAME: ${{ secrets.API_CONTACT_NAME }}
           API_CONTACT_MAIL: ${{ secrets.API_CONTACT_MAIL }}
@@ -34,3 +36,5 @@ jobs:
           ACCESS_TOKEN_EXPIRE_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
           REFRESH_TOKEN_EXPIRE_MINUTES: ${{ secrets.REFRESH_TOKEN_EXPIRE_MINUTES }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v2
