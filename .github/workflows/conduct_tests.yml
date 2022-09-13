@@ -21,7 +21,6 @@ jobs:
       - name: Perform the tests
         run: |
           poetry run coverage run -m pytest
-          poetry run coverage report -m
         env:
           API_CONTACT_NAME: ${{ secrets.API_CONTACT_NAME }}
           API_CONTACT_MAIL: ${{ secrets.API_CONTACT_MAIL }}
@@ -39,4 +38,4 @@ jobs:
           REFRESH_TOKEN_EXPIRE_MINUTES: ${{ secrets.REFRESH_TOKEN_EXPIRE_MINUTES }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       - name: Upload coverage report
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
