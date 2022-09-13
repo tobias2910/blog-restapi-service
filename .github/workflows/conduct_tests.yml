@@ -21,6 +21,7 @@ jobs:
       - name: Perform the tests
         run: |
           poetry run coverage run -m pytest
+          peotry run coverage xml
         env:
           API_CONTACT_NAME: ${{ secrets.API_CONTACT_NAME }}
           API_CONTACT_MAIL: ${{ secrets.API_CONTACT_MAIL }}
