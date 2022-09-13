@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - "**"
+      - "!dependabot/*"
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
@@ -21,7 +22,7 @@ jobs:
       - name: Perform the tests
         run: |
           poetry run coverage run -m pytest
-          peotry run coverage xml
+          poetry run coverage xml
         env:
           API_CONTACT_NAME: ${{ secrets.API_CONTACT_NAME }}
           API_CONTACT_MAIL: ${{ secrets.API_CONTACT_MAIL }}
