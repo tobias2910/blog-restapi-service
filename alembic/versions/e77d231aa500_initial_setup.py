@@ -1,15 +1,16 @@
-"""Initial DB generation
+"""Initial setup
 
-Revision ID: fcd834f5ac05
+Revision ID: e77d231aa500
 Revises:
-Create Date: 2022-09-09 07:54:02.792008
+Create Date: 2022-10-06 00:12:00.161983
 
 """
 import sqlalchemy as sa
 from alembic import op
+from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = "fcd834f5ac05"
+revision = "e77d231aa500"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,7 +26,7 @@ def upgrade() -> None:
         sa.Column("image_url", sa.String(), nullable=True),
         sa.Column("description", sa.String(), nullable=True),
         sa.Column("content", sa.String(), nullable=True),
-        sa.Column("tags", sa.String(), nullable=True),
+        sa.Column("tags", postgresql.JSONB(astext_type=sa.Text()), nullable=True),
         sa.Column("created_at", sa.DATE(), nullable=False),
         sa.Column("updated_at", sa.DATE(), nullable=True),
         sa.PrimaryKeyConstraint("id"),
@@ -39,7 +40,7 @@ def upgrade() -> None:
         sa.Column("image_url", sa.String(), nullable=True),
         sa.Column("description", sa.String(), nullable=True),
         sa.Column("project_url", sa.String(), nullable=True),
-        sa.Column("tags", sa.String(), nullable=True),
+        sa.Column("tags", postgresql.JSONB(astext_type=sa.Text()), nullable=True),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(op.f("ix_projects_id"), "projects", ["id"], unique=False)

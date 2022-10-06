@@ -1,7 +1,9 @@
 """Projects schemas."""
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from pydantic import BaseModel, Field
+
+from src.schemas.tags_schema import Tags
 
 
 class Project(BaseModel):
@@ -15,7 +17,7 @@ class Project(BaseModel):
         example="This is my awesome description",
     )
     project_url: str = Field(example="www.asset-monitoring.de")
-    tags: Union[List[str], str] = Field(example=["React", "TailwindCSS", "NextJS"])
+    tags: List[Tags] = Field(example=["React", "TailwindCSS", "NextJS"])
 
     class Config:
         """Enable the ORM compatibility for SQLAlchemy."""
@@ -23,17 +25,10 @@ class Project(BaseModel):
         orm_mode = True
 
 
-class CreateProject(Project):
-    """Schema for creating a new project."""
-
-    tags: List[str] = Field(example=["React", "TailwindCSS", "NextJS"])
-
-
 class ProjectCreated(Project):
     """Schema for a created project."""
 
     id: int
-    tags: List[str] = Field(example=["React", "TailwindCSS", "NextJS"])
 
 
 class UpdateProject(Project):

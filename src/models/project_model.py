@@ -1,5 +1,6 @@
 """Project model for the database."""
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.dialects.postgresql import JSONB
 
 from src.db.base import Base
 
@@ -14,4 +15,4 @@ class Project(Base):
     image_url = Column(String)
     description = Column(String)
     project_url = Column(String)
-    tags = Column(String)
+    tags = Column(JSONB)
