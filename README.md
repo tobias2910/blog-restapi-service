@@ -3,6 +3,8 @@
 [![Test](https://github.com/tobias2910/blog-restapi-service/actions/workflows/conduct_tests.yml/badge.svg)](https://github.com/tobias2910/blog-restapi-service/actions/workflows/conduct_tests.yml)
 [![codecov](https://codecov.io/gh/tobias2910/blog-restapi-service/branch/main/graph/badge.svg?token=OMD1CRDLTH)](https://codecov.io/gh/tobias2910/blog-restapi-service)
 ![License](https://img.shields.io/badge/license-MIT-brightgreen)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tobias2910_blog-restapi-service&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=tobias2910_blog-restapi-service)
+
 ---
 
 This is a REST API build using the FAST API framework. It has the purpose to to provide the capabilities to manage

@@ -8,7 +8,6 @@ from sqlalchemy.future import select
 
 from src.models.project_model import Project
 from src.schemas.projects_schema import (
-    CreateProject,
     ProjectCreated,
     ProjectDeleted,
     ProjectUpdated,
@@ -102,7 +101,7 @@ class ProjectsService:
                 "Error deleting the project",
             ) from BaseException
 
-    async def create_project(self, project: CreateProject, db_session: AsyncSession) -> ProjectCreated:
+    async def create_project(self, project: Project, db_session: AsyncSession) -> ProjectCreated:
         """Insert the provided project in the database.
 
         Args:
@@ -115,17 +114,13 @@ class ProjectsService:
         Returns:
             ProjectCreated: The created project including the ID.
         """
-        create_project = project.dict(exclude={"tags"})
+        create_project = project.dict()
+
         try:
-            new_project = Project(
-                **create_project,
-                tags=";".join(project.tags),
-            )
+            new_project = Project(**create_project)
             db_session.add(new_project)
 
             await db_session.commit()
-            # Split the tags string again, since it was only required for the DB
-            new_project.tags = new_project.tags.split(";")
 
             return new_project  # noqa: TC300
         except BaseException:
@@ -152,7 +147,6 @@ class ProjectsService:
         """
         try:
             update_project = project.dict(exclude_unset=True)
-            update_project["tags"] = ";".join(project.tags)
             res: AsyncSession = await db_session.execute(
                 update(Project)
                 .where(Project.id == project_id)

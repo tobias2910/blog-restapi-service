@@ -12,7 +12,7 @@ def get_fake_article() -> Dict[str, Any]:
 
     article = {
         "author": fake.name(),
-        "tags": [fake.unique.company_suffix() for _ in range(3)],
+        "tags": [{"icon_name": fake.name(), "name": fake.name()} for _ in range(3)],
         "image_url": fake.domain_name(),
         "title": fake.sentence(nb_words=3),
         "description": fake.sentence(nb_words=14),

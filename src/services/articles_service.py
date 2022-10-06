@@ -13,7 +13,6 @@ from src.schemas.articles_schema import (
     ArticleDB,
     ArticleDeleted,
     ArticleUpdated,
-    CreateArticle,
     UpdateArticle,
 )
 
@@ -104,7 +103,7 @@ class ArticlesService:
                 "Error deleting the article",
             ) from BaseException
 
-    async def create_article(self, article: CreateArticle, db_session: AsyncSession) -> ArticleCreated:
+    async def create_article(self, article: Article, db_session: AsyncSession) -> ArticleCreated:
         """Insert the provided article in the database.
 
         Args:
@@ -117,17 +116,15 @@ class ArticlesService:
         Returns:
             ArticleCreated: The created article including the ID.
         """
-        create_article = article.dict(exclude={"tags"})
+        create_article = article.dict()
         try:
             new_article = Article(
                 **create_article,
-                tags=";".join(article.tags),
                 created_at=datetime.now(),
             )
             db_session.add(new_article)
 
             await db_session.commit()
-            new_article.tags = new_article.tags.split(";")
 
             return new_article  # noqa: TC300
         except BaseException:
@@ -154,7 +151,7 @@ class ArticlesService:
         """
         try:
             update_article = article.dict(exclude_unset=True)
-            update_article["tags"] = ";".join(article.tags)
+
             res: AsyncSession = await db_session.execute(
                 update(Article)
                 .where(Article.id == article_id)

@@ -15,7 +15,8 @@ RUN apt-get update && apt-get upgrade -y \
     # Cleaning cache:
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
-RUN pip install poetry
+
+ENV PATH='/root/.local/bin:$PATH'
 
 # Copy the pyproject.toml and lock file
 COPY pyproject.toml poetry.lock poetry.toml ./
@@ -30,5 +31,6 @@ COPY . /app
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
 USER appuser
+
 # Start the uvicorn server
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,6 +1,6 @@
 """Article model for the database."""
 from sqlalchemy import Column, Integer, String
-from sqlalchemy.dialects.postgresql import DATE
+from sqlalchemy.dialects.postgresql import DATE, JSONB
 
 from src.db.base import Base
 
@@ -16,6 +16,6 @@ class Article(Base):
     image_url = Column(String)
     description = Column(String)
     content = Column(String)
-    tags = Column(String)
+    tags = Column(JSONB)
     created_at = Column(DATE, nullable=False)
     updated_at = Column(DATE)

@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.base import get_session
 from src.schemas.projects_schema import (
-    CreateProject,
+    Project,
     ProjectCreated,
     ProjectDB,
     ProjectDeleted,
@@ -82,9 +82,7 @@ async def get_projects(
     status_code=status.HTTP_201_CREATED,
     response_model=ProjectCreated,
 )
-async def add_project(
-    project: CreateProject, db_session: AsyncSession = Depends(get_session)
-) -> ProjectCreated:
+async def add_project(project: Project, db_session: AsyncSession = Depends(get_session)) -> ProjectCreated:
     """Endpoint to create a new project in the database.
 
     Args:

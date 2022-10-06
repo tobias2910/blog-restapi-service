@@ -1,15 +1,17 @@
 """Article schemas."""
 from datetime import date
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from pydantic import BaseModel, Field
+
+from src.schemas.tags_schema import Tags
 
 
 class Article(BaseModel):
     """Base model for an article."""
 
     author: str = Field(example="Tobias Caliskan")
-    tags: Union[List[str], str] = Field(example=["React", "TailwindCSS", "NextJS"])
+    tags: List[Tags] = Field(example=["React", "TailwindCSS", "NextJS"])
     image_url: str = Field(example="www.asset-monitoring.de/nice_picture.svg")
     title: str = Field(example="This is my awesome title")
     description: str = Field(
@@ -28,7 +30,6 @@ class Article(BaseModel):
 class CreateArticle(Article):
     """Schema for creating a new article."""
 
-    tags: List[str] = Field(example=["React", "TailwindCSS", "NextJS"])
     content: str = Field(example="My awesome title")
 
 
@@ -36,7 +37,6 @@ class ArticleCreated(Article):
     """Schema for a created article."""
 
     id: int
-    tags: List[str] = Field(example=["React", "TailwindCSS", "NextJS"])
     content: str = Field(example="My new content in markdown")
     created_at: date
 
