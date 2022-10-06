@@ -16,7 +16,7 @@ RUN apt-get update && apt-get upgrade -y \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
-ENV PATH='/root/.local/bin:$PATH'
+ENV PATH "/root/.local/bin:$PATH"
 
 # Copy the pyproject.toml and lock file
 COPY pyproject.toml poetry.lock poetry.toml ./
