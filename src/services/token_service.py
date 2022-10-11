@@ -1,5 +1,6 @@
 """Token services."""
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 from jose import jwt
 from jose.exceptions import ExpiredSignatureError
@@ -31,7 +32,7 @@ class TokenService:
         """
         payload = {
             "sub": user_id,
-            "iat": int(datetime.now().timestamp()),
+            "iat": int(datetime.now(ZoneInfo("Europe/Amsterdam")).timestamp()),
             "exp": expires_in,
             "type": type,
         }
