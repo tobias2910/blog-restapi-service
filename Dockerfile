@@ -6,6 +6,9 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
+# Ensuring that the correct timezone is being used
+ENV TZ=Europe/Amsterdam
+
 # Install required tools
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install --no-install-recommends -y \
